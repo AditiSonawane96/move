@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!--
+  welcome.html
+  The very first screen: Chip waves hello and asks for your name.
+  The same window is reused for "Change name…" in the tray menu.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Security: only allow scripts and styles from our own files. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'" />
+    <title>Welcome to MoveNudge</title>
+    <link rel="stylesheet" href="../shared/base.css" />
+    <link rel="stylesheet" href="welcome.css" />
+  </head>
+  <body>
+    <main class="page">
+      <!-- A simple waving Chip. The full, animated characters arrive in Stage 2-5. -->
+      <svg class="buddy" viewBox="0 0 140 150" aria-hidden="true">
+        <ellipse class="shadow" cx="70" cy="141" rx="36" ry="6" />
+
+        <!-- Legs -->
+        <rect x="51" y="104" width="9" height="32" rx="4.5" fill="#9aa3ad" />
+        <rect x="80" y="104" width="9" height="32" rx="4.5" fill="#9aa3ad" />
+        <ellipse cx="53" cy="137" rx="9" ry="5" fill="#4b5563" />
+        <ellipse cx="87" cy="137" rx="9" ry="5" fill="#4b5563" />
+
+        <!-- Left arm, resting -->
+        <rect x="14" y="68" width="26" height="9" rx="4.5" fill="#9aa3ad" />
+        <circle cx="14" cy="72.5" r="7" fill="#4b5563" />
+
+        <!--
+          Right arm, waving.
+          The OUTER group gets the CSS animation (it rotates around the
+          shoulder). The INNER group holds the arm's own fixed tilt.
+          If we put both on the same element, the CSS animation would
+          replace the tilt and the arm would jump to the wrong place.
+        -->
+        <g class="wave-arm">
+          <g transform="rotate(-55 100 72)">
+            <rect x="100" y="68" width="28" height="9" rx="4.5" fill="#9aa3ad" />
+            <circle cx="129" cy="72.5" r="7" fill="#4b5563" />
+          </g>
+        </g>
+
+        <!-- Gray pins around the chip -->
+        <g fill="#9aa3ad">
+          <rect x="50" y="18" width="8" height="14" rx="2" />
+          <rect x="66" y="18" width="8" height="14" rx="2" />
+          <rect x="82" y="18" width="8" height="14" rx="2" />
+          <rect x="24" y="48" width="14" height="8" rx="2" />
+          <rect x="102" y="48" width="14" height="8" rx="2" />
+          <rect x="24" y="84" width="14" height="8" rx="2" />
+          <rect x="102" y="84" width="14" height="8" rx="2" />
+        </g>
+
+        <!-- Body -->
+        <rect x="34" y="28" width="72" height="80" rx="16" fill="#6ee7b7" stroke="#24a075" stroke-width="4" />
+
+        <!-- Face: eyes are wrapped in a group so the blink animation
+             doesn't fight with their position. -->
+        <g class="blink">
+          <circle cx="57" cy="60" r="7" fill="#1f2937" />
+          <circle cx="83" cy="60" r="7" fill="#1f2937" />
+          <circle cx="59" cy="58" r="2.2" fill="#ffffff" />
+          <circle cx="85" cy="58" r="2.2" fill="#ffffff" />
+        </g>
+        <path d="M56 78 Q70 92 84 78" fill="none" stroke="#1f2937" stroke-width="4" stroke-linecap="round" />
+        <circle cx="46" cy="76" r="5" fill="#fca5a5" opacity="0.7" />
+        <circle cx="94" cy="76" r="5" fill="#fca5a5" opacity="0.7" />
+      </svg>
+
+      <!-- Step 1: ask for the name -->
+      <section id="ask-step">
+        <h1 id="ask-title">Hi there! I'm Chip.</h1>
+        <p id="ask-text" class="subtitle">I'll pop onto your screen now and then to get you moving. What's your name?</p>
+        <form id="name-form">
+          <label for="name-input" class="visually-hidden">Your name</label>
+          <input id="name-input" type="text" maxlength="30" placeholder="Your name" autocomplete="given-name" autofocus />
+          <button id="save-button" type="submit" class="primary">Let's go!</button>
+        </form>
+        <p class="privacy">🔒 Saved only on this computer. Never sent anywhere.</p>
+      </section>
+
+      <!-- Step 2: say hello and explain where to find the app -->
+      <section id="done-step" hidden>
+        <h1 id="done-title"></h1>
+        <p id="done-text" class="subtitle"></p>
+        <button id="done-button" class="primary">Got it!</button>
+      </section>
+    </main>
+
+    <script src="welcome.js"></script>
+  </body>
+</html>

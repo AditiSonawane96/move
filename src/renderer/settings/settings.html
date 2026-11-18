@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--
+  settings.html
+  The settings window: name, interval, voice and start-at-login.
+  Opened from "Settings…" in the tray menu.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'" />
+    <title>MoveNudge Settings</title>
+    <link rel="stylesheet" href="../shared/base.css" />
+    <link rel="stylesheet" href="settings.css" />
+  </head>
+  <body>
+    <form id="settings-form" class="page">
+      <h1>Settings</h1>
+      <p class="subtitle" id="streak-line"></p>
+
+      <!-- Name -->
+      <div class="field">
+        <label for="name">Your name</label>
+        <input id="name" type="text" maxlength="30" placeholder="Your name" />
+      </div>
+
+      <!-- Interval -->
+      <div class="field">
+        <label for="interval">Nudge me every</label>
+        <select id="interval"></select>
+      </div>
+
+      <!-- Character size -->
+      <div class="field">
+        <label for="character-size">Character size</label>
+        <select id="character-size">
+          <option value="small">Small (a quarter of the screen height)</option>
+          <option value="medium">Medium (a third of the screen height)</option>
+          <option value="large">Large (almost half the screen height)</option>
+          <option value="huge">Huge (over half the screen height)</option>
+        </select>
+      </div>
+
+      <!-- Ask how I'm feeling -->
+      <label class="toggle-row">
+        <span>
+          <strong>Ask how I'm feeling</strong>
+          <small>Choose Desk friendly or Full energy first. Off = a surprise exercise</small>
+        </span>
+        <input id="ask-feeling" type="checkbox" class="switch" />
+      </label>
+
+      <!-- Voice on/off -->
+      <label class="toggle-row">
+        <span>
+          <strong>Voice</strong>
+          <small>Characters say your name out loud</small>
+        </span>
+        <input id="voice-on" type="checkbox" class="switch" />
+      </label>
+
+      <!-- Voice choice -->
+      <div class="field">
+        <label for="voice-name">Voice</label>
+        <div class="row">
+          <select id="voice-name"></select>
+          <button id="test-voice" type="button">▶ Test</button>
+        </div>
+      </div>
+
+      <!-- Start at login -->
+      <label class="toggle-row">
+        <span>
+          <strong>Start at login</strong>
+          <small>Open MoveNudge when your computer starts (installed app only)</small>
+        </span>
+        <input id="start-at-login" type="checkbox" class="switch" />
+      </label>
+
+      <div class="buttons">
+        <span id="saved-note" class="saved-note" hidden>Saved ✓</span>
+        <button id="cancel" type="button">Cancel</button>
+        <button type="submit" class="primary">Save</button>
+      </div>
+    </form>
+
+    <!-- Reuse the nudge window's voice code, so "Test" sounds exactly the same. -->
+    <script src="../../../config/voice-lines.js"></script>
+    <script src="../nudge/voice.js"></script>
+    <script src="settings.js"></script>
+  </body>
+</html>

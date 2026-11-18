@@ -1,0 +1,314 @@
+/* src/renderer/nudge/exercises.css
+   ---------------------------------------------------------------------------
+   One animation per exercise. nudge.js adds a class like "ex-squats" to the
+   character; the class name is "ex-" + the exercise id in config/exercises.js.
+   To add an exercise: add it to the config AND add its animation here.
+
+   Quick reminders (see rig.js for the full picture):
+   - Limb classes: arm-left, forearm-left, arm-right, forearm-right,
+     leg-left, shin-left, leg-right, shin-right. Each rotates around its joint.
+   - Positive degrees swing a limb toward the LEFT of the screen, negative
+     toward the RIGHT. Arms already hang 28deg outward when resting.
+   - .char-root moves the whole character; .shadow is the shadow on the ground.
+   - --spring is a bouncy curve, so moves feel playful, not robotic.
+   --------------------------------------------------------------------------- */
+
+/* Limbs ease smoothly into and out of every pose. */
+.arm-left, .arm-right, .forearm-left, .forearm-right,
+.leg-left, .leg-right, .shin-left, .shin-right,
+.shoulder-left, .shoulder-right, .hip-left, .hip-right, .torso {
+  transition: transform 0.5s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+
+/* Feet change shape from their own centre (for calf raises). */
+.foot {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* ===================================================================== */
+/* SQUATS: legs bend (knees out), body lowers, arms reach forward.       */
+/* The body drops exactly as much as the bent legs get shorter, so the   */
+/* feet stay on the ground.                                              */
+/* ===================================================================== */
+.ex-squats .char-root { animation: squat-body 2.2s ease-in-out infinite; }
+.ex-squats .leg-left { animation: squat-thigh-left 2.2s ease-in-out infinite; }
+.ex-squats .leg-right { animation: squat-thigh-right 2.2s ease-in-out infinite; }
+.ex-squats .shin-left { animation: squat-shin-left 2.2s ease-in-out infinite; }
+.ex-squats .shin-right { animation: squat-shin-right 2.2s ease-in-out infinite; }
+.ex-squats .arm-left { animation: squat-arm-left 2.2s ease-in-out infinite; }
+.ex-squats .arm-right { animation: squat-arm-right 2.2s ease-in-out infinite; }
+
+@keyframes squat-body {
+  0%, 100% { transform: translateY(0); }
+  22% { transform: translateY(4px); }
+  45%, 55% { transform: translateY(17px); }
+  78% { transform: translateY(4px); }
+}
+@keyframes squat-thigh-left {
+  0%, 100% { transform: rotate(0deg); }
+  22%, 78% { transform: rotate(20deg); }
+  45%, 55% { transform: rotate(40deg); }
+}
+@keyframes squat-thigh-right {
+  0%, 100% { transform: rotate(0deg); }
+  22%, 78% { transform: rotate(-20deg); }
+  45%, 55% { transform: rotate(-40deg); }
+}
+@keyframes squat-shin-left {
+  0%, 100% { transform: rotate(0deg); }
+  22%, 78% { transform: rotate(-40deg); }
+  45%, 55% { transform: rotate(-80deg); }
+}
+@keyframes squat-shin-right {
+  0%, 100% { transform: rotate(0deg); }
+  22%, 78% { transform: rotate(40deg); }
+  45%, 55% { transform: rotate(80deg); }
+}
+@keyframes squat-arm-left {
+  0%, 100% { transform: rotate(0deg); }
+  45%, 55% { transform: rotate(58deg); }
+}
+@keyframes squat-arm-right {
+  0%, 100% { transform: rotate(0deg); }
+  45%, 55% { transform: rotate(-58deg); }
+}
+
+/* ===================================================================== */
+/* CALF RAISES: bounce up onto the toes while reaching up high.          */
+/* The feet stretch downward so they stay touching the ground.           */
+/* ===================================================================== */
+.ex-calf-raises .char-root { animation: calf-body 1.4s var(--spring) infinite; }
+.ex-calf-raises .foot { animation: calf-foot 1.4s var(--spring) infinite; }
+.ex-calf-raises .arm-left { animation: reach-left 1.4s var(--spring) infinite; }
+.ex-calf-raises .arm-right { animation: reach-right 1.4s var(--spring) infinite; }
+.ex-calf-raises .shadow { animation: calf-shadow 1.4s var(--spring) infinite; }
+
+@keyframes calf-body {
+  0%, 15%, 100% { transform: translateY(0); }
+  45%, 65% { transform: translateY(-12px); }
+}
+@keyframes calf-foot {
+  0%, 15%, 100% { transform: translateY(0) scale(1, 1); }
+  45%, 65% { transform: translateY(9px) scale(0.7, 1.7); }
+}
+@keyframes reach-left {
+  0%, 15%, 100% { transform: rotate(60deg); }
+  45%, 65% { transform: rotate(122deg); }
+}
+@keyframes reach-right {
+  0%, 15%, 100% { transform: rotate(-60deg); }
+  45%, 65% { transform: rotate(-122deg); }
+}
+@keyframes calf-shadow {
+  45%, 65% { transform: scale(0.9); }
+}
+
+/* ===================================================================== */
+/* ARM CIRCLES: both arms spin in big full circles.                      */
+/* ===================================================================== */
+.ex-arm-circles .char-root { animation: breathe 1.5s ease-in-out infinite; }
+.ex-arm-circles .arm-left { animation: circle-left 1.5s linear infinite; }
+.ex-arm-circles .arm-right { animation: circle-right 1.5s linear infinite; }
+
+@keyframes circle-left {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes circle-right {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+/* ===================================================================== */
+/* BACK ARCH (chair stretch): hands behind the head, elbows wide,        */
+/* lean back and look up.                                                */
+/* ===================================================================== */
+.ex-back-arch .arm-left { transform: rotate(118deg); }
+.ex-back-arch .arm-right { transform: rotate(-118deg); }
+.ex-back-arch .forearm-left { transform: rotate(124deg); }
+.ex-back-arch .forearm-right { transform: rotate(-124deg); }
+.ex-back-arch .char-root { animation: arch-body 3s ease-in-out infinite; }
+.ex-back-arch .head { animation: arch-head 3s ease-in-out infinite; }
+
+@keyframes arch-body {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  40%, 60% { transform: translateY(3px) scaleY(0.95); }
+}
+@keyframes arch-head {
+  0%, 100% { transform: translateY(0); }
+  40%, 60% { transform: translateY(-6px); }
+}
+
+/* ===================================================================== */
+/* SIDE STRETCH (chair stretch): arms up, lean slowly side to side.      */
+/* ===================================================================== */
+.ex-side-stretch .arm-left { transform: rotate(122deg); }
+.ex-side-stretch .arm-right { transform: rotate(-122deg); }
+.ex-side-stretch .char-root { animation: side-lean 4s ease-in-out infinite; }
+
+@keyframes side-lean {
+  0%, 100% { transform: rotate(0deg); }
+  20%, 30% { transform: rotate(-14deg); }
+  70%, 80% { transform: rotate(14deg); }
+}
+
+/* ===================================================================== */
+/* JUMPING JACKS: jump, land with legs wide and arms overhead, jump,     */
+/* land with legs together and arms down.                                */
+/* ===================================================================== */
+.ex-jumping-jacks .char-root { animation: jack-body 1s ease-in-out infinite; }
+.ex-jumping-jacks .shadow { animation: jack-shadow 1s ease-in-out infinite; }
+.ex-jumping-jacks .leg-left { animation: jack-leg-left 1s ease-in-out infinite; }
+.ex-jumping-jacks .leg-right { animation: jack-leg-right 1s ease-in-out infinite; }
+.ex-jumping-jacks .arm-left { animation: jack-arm-left 1s ease-in-out infinite; }
+.ex-jumping-jacks .arm-right { animation: jack-arm-right 1s ease-in-out infinite; }
+
+@keyframes jack-body {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-26px); }
+  50% { transform: translateY(3px); }
+  75% { transform: translateY(-26px); }
+}
+@keyframes jack-shadow {
+  25%, 75% { transform: scale(0.7); }
+}
+@keyframes jack-leg-left {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(18deg); }
+}
+@keyframes jack-leg-right {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-18deg); }
+}
+@keyframes jack-arm-left {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(122deg); }
+}
+@keyframes jack-arm-right {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-122deg); }
+}
+
+/* ===================================================================== */
+/* THE PLANK: used by push-ups and mountain climbers.                    */
+/* The character turns sideways (the torso squashes thin and the arms    */
+/* and legs slide to its centre line), then tips over into a plank with  */
+/* the head on the right. --tilt is how far it tips, --lift moves it     */
+/* down so the hands and feet touch the ground.                          */
+/* ===================================================================== */
+.plank {
+  --tilt: 62deg;
+  --lift: 30px;
+}
+.plank .char-root {
+  transform-origin: 100px var(--hip-y);
+  transform: translateY(var(--lift)) rotate(var(--tilt));
+  transition: transform 0.6s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+.plank .torso {
+  transform-box: view-box;
+  transform-origin: 100px 0;
+  transform: scaleX(0.45);
+}
+.plank .shoulder-left,
+.plank .shoulder-right {
+  transform: translate(100px, var(--shoulder-y));
+}
+.plank .hip-left,
+.plank .hip-right {
+  transform: translate(100px, var(--hip-y));
+}
+/* Arms point straight down to the floor (both overlap, like a side view). */
+.plank .arm-left { transform: rotate(-90deg); }
+.plank .arm-right { transform: rotate(-34deg); }
+.plank .forearm-left,
+.plank .forearm-right { transform: rotate(0deg); }
+.plank .leg-left,
+.plank .leg-right { transform: rotate(-6deg); }
+.plank .shadow { transform: scaleX(1.5); transition: transform 0.6s ease; }
+
+/* ----- PUSH-UPS: elbows bend, the body lowers, then pushes back up. ----- */
+.ex-push-ups .char-root { animation: pushup-body 1.8s ease-in-out infinite; }
+.ex-push-ups .arm-left { animation: pushup-arm-left 1.8s ease-in-out infinite; }
+.ex-push-ups .arm-right { animation: pushup-arm 1.8s ease-in-out infinite; }
+.ex-push-ups .forearm-left,
+.ex-push-ups .forearm-right { animation: pushup-forearm 1.8s ease-in-out infinite; }
+
+@keyframes pushup-body {
+  0%, 100% { transform: translateY(var(--lift)) rotate(var(--tilt)); }
+  45%, 55% { transform: translateY(calc(var(--lift) + 20px)) rotate(calc(var(--tilt) + 10deg)); }
+}
+@keyframes pushup-arm {
+  0%, 100% { transform: rotate(-34deg); }
+  45%, 55% { transform: rotate(10deg); }
+}
+@keyframes pushup-arm-left {
+  0%, 100% { transform: rotate(-90deg); }
+  45%, 55% { transform: rotate(-46deg); }
+}
+@keyframes pushup-forearm {
+  0%, 100% { transform: rotate(0deg); }
+  45%, 55% { transform: rotate(-80deg); }
+}
+
+/* ----- MOUNTAIN CLIMBERS: knees drive toward the chest, fast! ----- */
+.ex-mountain-climbers .leg-left { animation: climb-leg 0.7s ease-in-out infinite; }
+.ex-mountain-climbers .leg-right { animation: climb-leg 0.7s ease-in-out infinite -0.35s; }
+.ex-mountain-climbers .shin-left { animation: climb-shin 0.7s ease-in-out infinite; }
+.ex-mountain-climbers .shin-right { animation: climb-shin 0.7s ease-in-out infinite -0.35s; }
+
+@keyframes climb-leg {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(-75deg); }
+}
+@keyframes climb-shin {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(95deg); }
+}
+
+/* ===================================================================== */
+/* VICTORY DANCE: sway side to side, pump the arms, kick the legs.       */
+/* ===================================================================== */
+.dancing .char-root { animation: dance-sway 1s ease-in-out infinite; }
+.dancing .arm-left { animation: dance-pump-left 0.5s var(--spring) infinite alternate; }
+.dancing .arm-right { animation: dance-pump-right 0.5s var(--spring) infinite alternate-reverse; }
+.dancing .forearm-left { animation: dance-fist-left 0.5s var(--spring) infinite alternate; }
+.dancing .forearm-right { animation: dance-fist-right 0.5s var(--spring) infinite alternate-reverse; }
+.dancing .leg-left { animation: dance-kick-left 1s var(--spring) infinite; }
+.dancing .leg-right { animation: dance-kick-right 1s var(--spring) infinite; }
+.dancing .shadow { animation: dance-shadow 1s ease-in-out infinite; }
+
+@keyframes dance-sway {
+  0%, 100% { transform: translate(-8px, 0) rotate(-7deg); }
+  25% { transform: translate(0, -12px) rotate(0deg); }
+  50% { transform: translate(8px, 0) rotate(7deg); }
+  75% { transform: translate(0, -12px) rotate(0deg); }
+}
+@keyframes dance-pump-left {
+  from { transform: rotate(70deg); }
+  to { transform: rotate(125deg); }
+}
+@keyframes dance-pump-right {
+  from { transform: rotate(-70deg); }
+  to { transform: rotate(-125deg); }
+}
+@keyframes dance-fist-left {
+  from { transform: rotate(-60deg); }
+  to { transform: rotate(-10deg); }
+}
+@keyframes dance-fist-right {
+  from { transform: rotate(60deg); }
+  to { transform: rotate(10deg); }
+}
+@keyframes dance-kick-left {
+  0%, 50%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(32deg); }
+}
+@keyframes dance-kick-right {
+  0%, 50%, 100% { transform: rotate(0deg); }
+  75% { transform: rotate(-32deg); }
+}
+@keyframes dance-shadow {
+  25%, 75% { transform: scale(0.8); }
+}

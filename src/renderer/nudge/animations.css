@@ -1,0 +1,273 @@
+/* src/renderer/nudge/animations.css
+   ---------------------------------------------------------------------------
+   All the body movement, done with CSS animations.
+
+   nudge.js switches the movement by putting ONE class on the #buddy element:
+     .idle         standing, gently breathing
+     .walking      legs and arms swing, body bobs
+     .knocking     knocks on your screen from the inside
+     .waving       one arm goes up and the hand waves
+     (exercises and the victory dance are in exercises.css)
+
+   Reminder: the classes like .arm-left are on the INNER joint groups, whose
+   (0, 0) point is the shoulder/hip/elbow/knee. So "rotate" turns a limb
+   around its joint. Positive degrees swing a limb toward the LEFT of the
+   screen, negative degrees toward the RIGHT.
+   --------------------------------------------------------------------------- */
+
+/* Rotate every joint around its own (0, 0) point. */
+.joint {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+
+/* The whole character moves around the point between its feet. */
+.char-root,
+.shadow {
+  transform-box: view-box;
+  transform-origin: 100px 228px;
+}
+
+/* A "springy" curve: overshoots a little, then settles. Feels playful. */
+:root {
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --step: 0.5s; /* how long one walking step takes */
+}
+
+/* ----- Idle: gentle breathing ----- */
+.idle .char-root {
+  animation: breathe 2.6s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  50% { transform: translateY(-2px) scaleY(1.02); }
+}
+
+/* ----- Walking ----- */
+/* Up and down once per step. */
+.walking .char-root {
+  animation: walk-bob calc(var(--step) / 2) ease-in-out infinite alternate;
+}
+
+@keyframes walk-bob {
+  from { transform: translateY(0) rotate(0deg); }
+  to { transform: translateY(-7px) rotate(-2deg); }
+}
+
+/* The shadow gets smaller when the body bobs up. */
+.walking .shadow {
+  animation: shadow-bob calc(var(--step) / 2) ease-in-out infinite alternate;
+}
+
+@keyframes shadow-bob {
+  to { transform: scale(0.88); }
+}
+
+/* Legs swing forward and back; the right leg is always opposite the left. */
+.walking .leg-left {
+  animation: leg-swing var(--step) ease-in-out infinite alternate;
+}
+.walking .leg-right {
+  animation: leg-swing var(--step) ease-in-out infinite alternate-reverse;
+}
+
+@keyframes leg-swing {
+  from { transform: rotate(-26deg); }
+  to { transform: rotate(26deg); }
+}
+
+/* Knees bend as the leg swings back. */
+.walking .shin-left {
+  animation: knee-bend var(--step) ease-in-out infinite alternate;
+}
+.walking .shin-right {
+  animation: knee-bend var(--step) ease-in-out infinite alternate-reverse;
+}
+
+@keyframes knee-bend {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(28deg); }
+}
+
+/* Arms swing opposite to the legs, like real walking. */
+.walking .arm-left {
+  animation: arm-swing var(--step) ease-in-out infinite alternate-reverse;
+}
+.walking .arm-right {
+  animation: arm-swing var(--step) ease-in-out infinite alternate;
+}
+
+@keyframes arm-swing {
+  from { transform: rotate(-30deg); }
+  to { transform: rotate(30deg); }
+}
+
+/* Elbows stay a little bent while walking. */
+.walking .forearm-left {
+  transform: rotate(-20deg);
+}
+.walking .forearm-right {
+  transform: rotate(20deg);
+}
+
+/* ----- Waving ----- */
+.waving .char-root {
+  animation: breathe 2.6s ease-in-out infinite;
+}
+
+/* The right arm swings up high and stays there while waving. */
+.waving .arm-right {
+  animation: raise-arm 2.4s var(--spring) forwards;
+}
+
+@keyframes raise-arm {
+  0% { transform: rotate(0deg); }
+  18%, 82% { transform: rotate(-135deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* The hand flaps back and forth at the elbow. */
+.waving .forearm-right {
+  animation: wave-hand 0.32s ease-in-out infinite alternate;
+}
+
+@keyframes wave-hand {
+  from { transform: rotate(-30deg); }
+  to { transform: rotate(25deg); }
+}
+
+/* ----- Knocking on the glass -----
+   The right arm comes up with the hand near the head. Each time nudge.js
+   adds .knock-hit, the forearm taps forward and the hand gets bigger, as if
+   it's coming toward you and hitting the screen. */
+.knocking .char-root {
+  animation: breathe 2.6s ease-in-out infinite;
+}
+
+.knocking .arm-right {
+  transform: rotate(-100deg);
+  transition: transform 0.35s var(--spring);
+}
+
+.knocking .forearm-right {
+  transform: rotate(-58deg);
+  transition: transform 0.1s ease-out;
+}
+
+.knocking.knock-hit .forearm-right {
+  transform: rotate(-32deg);
+}
+
+/* Hands grow from their own centre. */
+.hand {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.1s ease-out;
+}
+
+.knocking.knock-hit .arm-right .hand {
+  transform: scale(1.4);
+}
+
+/* The victory dance lives in exercises.css, with the other exercises. */
+
+/* ----- Ignored for 30 seconds: hands on hips, tapping a foot ----- */
+.tapping .char-root {
+  animation: breathe 2.6s ease-in-out infinite;
+}
+.tapping .arm-left { transform: rotate(30deg); }
+.tapping .forearm-left { transform: rotate(-115deg); }
+.tapping .arm-right { transform: rotate(-30deg); }
+.tapping .forearm-right { transform: rotate(115deg); }
+.tapping .leg-right { transform: rotate(-8deg); }
+.tapping .shin-right .foot {
+  animation: foot-tap 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes foot-tap {
+  from { transform: translateY(0) rotate(0deg); }
+  to { transform: translateY(-5px) rotate(-20deg); }
+}
+
+/* ----- Ignored for 60 seconds: a big, slow, stretchy yawn ----- */
+.yawning .char-root {
+  animation: yawn-body 3.2s ease-in-out forwards;
+}
+.yawning .arm-left {
+  animation: yawn-arm-left 3.2s ease-in-out forwards;
+}
+.yawning .arm-right {
+  animation: yawn-arm-right 3.2s ease-in-out forwards;
+}
+
+@keyframes yawn-body {
+  0%, 100% { transform: scaleY(1); }
+  35%, 75% { transform: translateY(-4px) scaleY(1.06); }
+}
+@keyframes yawn-arm-left {
+  0% { transform: rotate(0deg); }
+  35%, 75% { transform: rotate(118deg); }
+  100% { transform: rotate(10deg); }
+}
+@keyframes yawn-arm-right {
+  0% { transform: rotate(0deg); }
+  35%, 75% { transform: rotate(-118deg); }
+  100% { transform: rotate(-10deg); }
+}
+
+/* ----- Ignored for 90 seconds: sitting on your mouse cursor ----- */
+/* Thighs stick out sideways and the shins dangle and swing. */
+.sitting .leg-left { transform: rotate(72deg); }
+.sitting .leg-right { transform: rotate(-72deg); }
+.sitting .shin-left { animation: dangle-left 0.9s ease-in-out infinite alternate; }
+.sitting .shin-right { animation: dangle-right 0.9s ease-in-out infinite alternate-reverse; }
+.sitting .arm-left { transform: rotate(-12deg); }
+.sitting .arm-right { transform: rotate(12deg); }
+
+@keyframes dangle-left {
+  from { transform: rotate(-55deg); }
+  to { transform: rotate(-90deg); }
+}
+@keyframes dangle-right {
+  from { transform: rotate(55deg); }
+  to { transform: rotate(90deg); }
+}
+
+/* ----- The villain's defeat: wobble, wobble... and fall over ----- */
+.defeated .char-root {
+  animation: defeat 2.4s ease-in forwards;
+}
+.defeated .shadow {
+  animation: defeat-shadow 2.4s ease-in forwards;
+}
+.defeated .arm-left { transform: rotate(70deg); }
+.defeated .arm-right { transform: rotate(-70deg); }
+
+@keyframes defeat {
+  0% { transform: rotate(0deg); }
+  12% { transform: rotate(-12deg); }
+  24% { transform: rotate(12deg); }
+  36% { transform: rotate(-16deg); }
+  48% { transform: rotate(16deg); }
+  60% { transform: rotate(-6deg); }
+  85% { transform: rotate(88deg); }
+  92% { transform: rotate(80deg); }
+  100% { transform: rotate(86deg) translateY(-6px); }
+}
+@keyframes defeat-shadow {
+  60% { transform: scaleX(1); }
+  100% { transform: scaleX(1.7); }
+}
+
+/* ----- Blinking server lights (Overclock) ----- */
+.led {
+  animation: led-blink 1.2s steps(1) infinite;
+}
+.led-b { animation-delay: -0.4s; }
+.led-c { animation-delay: -0.8s; animation-duration: 0.8s; }
+
+@keyframes led-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}

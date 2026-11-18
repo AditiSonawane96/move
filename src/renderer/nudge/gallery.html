@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+  gallery.html: a developer page, not part of the app.
+  Shows a character doing every exercise and expression at once, so you can
+  check (and tweak) the animations quickly.
+
+  Open it through a local web server, from the movenudge folder:
+    python3 -m http.server 8745
+  then visit:
+    http://localhost:8745/src/renderer/nudge/gallery.html?character=chip
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Same security rules as the real nudge window, so problems show up here too. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'" />
+    <title>MoveNudge gallery</title>
+    <link rel="stylesheet" href="nudge.css" />
+    <link rel="stylesheet" href="animations.css" />
+    <link rel="stylesheet" href="exercises.css" />
+    <link rel="stylesheet" href="face.css" />
+    <link rel="stylesheet" href="gallery.css" />
+  </head>
+  <body class="gallery-page">
+    <h1>MoveNudge gallery</h1>
+    <div id="grid" class="grid"></div>
+    <script src="../../../config/exercises.js"></script>
+    <script src="rig.js"></script>
+    <script src="face.js"></script>
+    <script src="gallery.js"></script>
+  </body>
+</html>

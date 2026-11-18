@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--
+  nudge.html
+  The see-through, full-screen layer the character walks across.
+  Everything here is transparent except the character, its speech bubble
+  and the card with buttons. Clicks on empty areas go straight through to
+  whatever is underneath (your real desktop and apps).
+
+  Tip: you can open this file through a local web server to preview the
+  animation. It runs in "demo mode" and loops forever.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'" />
+    <title>MoveNudge</title>
+    <link rel="stylesheet" href="nudge.css" />
+    <link rel="stylesheet" href="animations.css" />
+    <link rel="stylesheet" href="exercises.css" />
+    <link rel="stylesheet" href="face.css" />
+  </head>
+  <body>
+    <!-- The character. "interactive" means: catch the mouse here. -->
+    <div id="buddy" class="buddy interactive">
+      <div id="bubble" class="bubble" hidden></div>
+      <div id="rig-holder" class="rig-holder"></div>
+    </div>
+
+    <!-- The card. It has two steps: "How are you feeling?" and the exercise. -->
+    <div id="card" class="card interactive" hidden>
+      <div class="card-top">
+        <span id="card-kicker" class="card-kicker"></span>
+        <span id="today-count" class="today-count"></span>
+      </div>
+      <p id="card-title" class="card-title"></p>
+
+      <!-- Step 1: pick your energy level -->
+      <div id="feeling-step" class="feeling-step">
+        <button class="choice" data-choice="desk">
+          <span class="choice-emoji">🪑</span>
+          <span class="choice-text">
+            <strong>Desk friendly</strong>
+            <small id="desk-examples"></small>
+          </span>
+        </button>
+        <button class="choice" data-choice="energy">
+          <span class="choice-emoji">⚡</span>
+          <span class="choice-text">
+            <strong>Full energy</strong>
+            <small id="energy-examples"></small>
+          </span>
+        </button>
+      </div>
+
+      <!-- Step 2: the exercise -->
+      <div id="exercise-step" class="exercise-step" hidden>
+        <p id="exercise-meta" class="exercise-meta"></p>
+        <details class="how-to" open>
+          <summary>How to</summary>
+          <p id="how-to-text"></p>
+        </details>
+        <div class="progress"><div id="progress-fill" class="progress-fill"></div></div>
+        <p id="time-left" class="time-left"></p>
+      </div>
+
+      <div class="card-buttons">
+        <button id="btn-done" class="primary" data-choice="done" hidden>Done</button>
+        <button data-choice="snooze">Snooze 5 min</button>
+        <button class="quiet" data-choice="skip">Skip</button>
+      </div>
+    </div>
+
+    <!-- The order matters: each file can use the ones above it. -->
+    <script src="../../../config/voice-lines.js"></script>
+    <script src="../../../config/exercises.js"></script>
+    <script src="../../../config/holidays.js"></script>
+    <script src="rig.js"></script>
+    <script src="face.js"></script>
+    <script src="voice.js"></script>
+    <script src="sounds.js"></script>
+    <script src="effects.js"></script>
+    <script src="nudge.js"></script>
+  </body>
+</html>

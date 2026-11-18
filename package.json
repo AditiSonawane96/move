@@ -1,0 +1,78 @@
+{
+  "name": "movenudge",
+  "productName": "MoveNudge",
+  "version": "1.0.0",
+  "description": "A cute desktop buddy that walks onto your screen and gets you to stand up and move.",
+  "main": "main.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "nudge": "electron . --dev --nudge-now",
+    "icons": "node scripts/make-icons.js",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win"
+  },
+  "dependencies": {
+    "electron-store": "^8.2.0"
+  },
+  "devDependencies": {
+    "electron": "^45.3.4",
+    "electron-builder": "^26.18.0"
+  },
+  "author": "Aditi Sonawane",
+  "build": {
+    "appId": "com.movenudge.app",
+    "productName": "MoveNudge",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "characters/**/*",
+      "config/**/*",
+      "assets/**/*",
+      "!src/renderer/nudge/gallery.*"
+    ],
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        }
+      ],
+      "category": "public.app-category.healthcare-fitness",
+      "identity": "-",
+      "hardenedRuntime": false,
+      "extendInfo": {
+        "LSUIElement": true
+      }
+    },
+    "dmg": {
+      "title": "MoveNudge ${version}",
+      "artifactName": "MoveNudge-${version}-mac.dmg"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": false,
+      "artifactName": "MoveNudge-${version}-windows-setup.exe"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+/* src/renderer/nudge/gallery.css: layout for the developer gallery page. */
+
+body.gallery-page {
+  overflow: auto;
+  padding: 16px;
+  background: #f3f4f6;
+}
+
+.gallery-page h1 {
+  margin: 0 0 12px;
+  font-size: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(200px * var(--scale) + 16px), 1fr));
+  gap: 12px;
+}
+
+.tile {
+  padding: 8px;
+  border-radius: 14px;
+  background: #ffffff;
+  text-align: center;
+}
+
+/* In the gallery, each character stands in its own tile, not on the screen edge. */
+.tile .buddy {
+  position: relative;
+  margin: 0 auto;
+}
+
+.tile p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+}
