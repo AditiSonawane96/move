@@ -21,19 +21,27 @@ const TEST_INTERVAL = 1;
 const CHARACTER_SIZES = ['small', 'medium', 'large', 'huge'];
 
 // Default values, used the very first time the app runs.
-const store = new Store({
-  defaults: {
-    name: '', // empty means "we haven't asked yet"
-    intervalMinutes: 30,
-    voiceOn: true,
-    voiceName: '', // empty means "pick the best voice automatically"
-    characterSize: 'large',
-    askFeeling: false, // ask "How are you feeling?" before picking an exercise
-    startAtLogin: true,
-    streak: { date: '', count: 0 }, // nudges completed today
-    characterTurn: 0, // whose turn it is next (see characters/index.js)
-  },
-});
+const DEFAULTS = {
+  name: '', // empty means "we haven't asked yet"
+  intervalMinutes: 30,
+  voiceOn: true,
+  voiceName: '', // empty means "pick the best voice automatically"
+  characterSize: 'large',
+  askFeeling: false, // ask "How are you feeling?" before picking an exercise
+  startAtLogin: true,
+  streak: { date: '', count: 0 }, // nudges completed today
+  characterTurn: 0, // whose turn it is next (see characters/index.js)
+};
+
+const store = new Store({ defaults: DEFAULTS });
+
+// Reads one setting. If it's missing (for example, someone deleted the
+// settings file while Move was running), use the default instead of
+// crashing. ALWAYS read settings through this, never store.get() directly.
+function read(key) {
+  const value = store.get(key);
+  return value === undefined ? DEFAULTS[key] : value;
+}
 
 // Today's date as text, like "2026-11-18", in your local time zone.
 // We use it to reset the streak at midnight.
@@ -45,14 +53,16 @@ function todayKey() {
 
 // The name to use in sentences. Falls back to "friend" if no name is saved.
 function getName() {
-  return store.get('name') || 'friend';
+  return read('name') || 'friend';
 }
 
 // How many nudges you've completed today (0 if the saved count is from
 // another day).
 function getStreakToday() {
-  const streak = store.get('streak');
-  return streak.date === todayKey() ? streak.count : 0;
+  const streak = read('streak');
+  // (Also check it looks right, in case the file was edited by hand.)
+  if (!streak || streak.date !== todayKey()) return 0;
+  return Number(streak.count) || 0;
 }
 
 // Called when you press "Done" on a nudge.
@@ -65,23 +75,23 @@ function addToStreak() {
 // The settings the windows are allowed to see and change.
 function getSettings() {
   return {
-    name: store.get('name'),
-    intervalMinutes: store.get('intervalMinutes'),
-    voiceOn: store.get('voiceOn'),
-    voiceName: store.get('voiceName'),
-    characterSize: store.get('characterSize'),
-    askFeeling: store.get('askFeeling'),
-    startAtLogin: store.get('startAtLogin'),
+    name: read('name'),
+    intervalMinutes: read('intervalMinutes'),
+    voiceOn: read('voiceOn'),
+    voiceName: read('voiceName'),
+    characterSize: read('characterSize'),
+    askFeeling: read('askFeeling'),
+    startAtLogin: read('startAtLogin'),
   };
 }
 
 // Whose turn it is to visit, and moving on to the next character.
 function getCharacterTurn() {
-  return store.get('characterTurn');
+  return read('characterTurn');
 }
 
 function nextCharacterTurn() {
-  store.set('characterTurn', store.get('characterTurn') + 1);
+  store.set('characterTurn', (Number(read('characterTurn')) || 0) + 1);
 }
 
 // Saves changes coming from a window. We double-check every value, because
@@ -114,7 +124,7 @@ function resetAll() {
 module.exports = {
   NORMAL_INTERVALS,
   TEST_INTERVAL,
-  get: (key) => store.get(key),
+  get: (key) => read(key),
   getName,
   getStreakToday,
   addToStreak,
