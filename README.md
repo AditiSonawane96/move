@@ -52,12 +52,39 @@ and download the file for your computer:
 
 ### Mac
 
-1. Open the `.dmg` file and drag **Move** into the **Applications** folder.
-2. Open Move from Applications. You'll probably see a warning, see
-   [below](#the-unverified-app-warning).
-3. Type your name in the welcome window. Done!
-4. Look for the little chip icon and the countdown (like `Chip · 29:59`)
-   **in the menu bar at the top of your screen**. Move has no Dock icon.
+**1. Install:** open the downloaded `.dmg` file and drag **Move** into the
+**Applications** folder.
+
+**2. Allow Move in your security settings (first time only)**
+
+Move isn't signed with a paid Apple certificate (see
+[why](#the-unverified-app-warning)), so your Mac blocks it the first time.
+
+1. Open Move from Applications. When you see *"Move" Not Opened*, click
+   **Done**.
+2. Open **System Settings → Privacy & Security**.
+3. Scroll down to the **Security** section. Next to the message about Move,
+   click **Open Anyway**.
+4. Enter your Mac password, then click **Open Anyway** once more.
+
+**3. Type your name** in the welcome window.
+
+**4. What happens next**
+
+Move has **no window and no Dock icon**, so it can look like nothing
+happened. That's normal:
+
+- You may see a *Login Item Added* notification saying Move will open when
+  you log in. That means it's running.
+- Move lives in the **menu bar at the top right of your screen**: a little
+  chip icon with a countdown, like `Chip · 29:59`. Click it for the menu,
+  then choose **Test nudge now** to meet your first character.
+- When the countdown reaches zero, a character walks onto your screen.
+
+**Can't see the chip icon?** On MacBooks with a notch, a full menu bar hides
+extra icons behind the notch. Quit a few menu bar apps, or hold **Cmd** and
+drag other icons out of the menu bar, to make room. To check that Move is
+running, open it from Applications again: its **Settings** window appears.
 
 ### Windows
 
@@ -72,17 +99,10 @@ and download the file for your computer:
 
 Move is a free hobby project, so it isn't signed with a paid Apple or
 Microsoft developer certificate. Your computer will warn you the first time.
-That's expected. Here's how to open it anyway:
+That's expected, and you only need to allow it once.
 
-**Mac (macOS 15 Sequoia and newer)**
-
-1. Open Move. When you see *"Move" Not Opened* (or *Apple could not
-   verify…*), click **Done**.
-2. Open **System Settings → Privacy & Security**.
-3. Scroll down to the message about Move and click **Open Anyway**.
-4. Enter your password, then click **Open Anyway** once more.
-
-You only need to do this once.
+**Mac:** follow step 2 in the [Mac install steps](#mac) above (macOS 15
+Sequoia and newer).
 
 *Older Macs (macOS 14 and earlier):* right-click (or Control-click) Move
 in Applications, choose **Open**, then click **Open** again.
