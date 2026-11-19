@@ -43,7 +43,7 @@ stays on your computer.
 
 ## Install it 
 
-Go to the **[Releases page](https://github.com/AditiSonawane96/movenudge/releases/latest)**
+Go to the **[Releases page](https://github.com/AditiSonawane96/move/releases/latest)**
 and download the file for your computer:
 
 | Your computer | Download |
