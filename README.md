@@ -41,7 +41,7 @@ stays on your computer.
 
 ---
 
-## Install it (for friends)
+## Install it 
 
 Go to the **[Releases page](https://github.com/AditiSonawane96/movenudge/releases/latest)**
 and download the file for your computer:
