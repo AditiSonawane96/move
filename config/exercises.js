@@ -4,7 +4,7 @@
 //
 // Each exercise has:
 //   id       a short code name. It must match an animation in
-//            src/renderer/nudge/animations.css (added in Stage 4).
+//            src/renderer/nudge/exercises.css (like .ex-squats).
 //   name     what the card shows as the title
 //   group    "desk" = Desk friendly, "energy" = Full energy
 //   reps     how many to do (shown on the card: "10 reps")
@@ -12,8 +12,7 @@
 //   sayAs    how the character says it: "{name}, 10 squats with me. Ready? Go!"
 //   howTo    one short tip, shown under "How to" on the card
 //
-// The card will also show "🔥 2 today", your count of completed nudges.
-// (The card layout using these fields is built in Stage 4.)
+// The card also shows "🔥 2 today", your count of completed nudges.
 // ---------------------------------------------------------------------------
 
 const EXERCISES = [

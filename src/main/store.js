@@ -55,7 +55,7 @@ function getStreakToday() {
   return streak.date === todayKey() ? streak.count : 0;
 }
 
-// Called when you press "Done" on a nudge (from Stage 2 on).
+// Called when you press "Done" on a nudge.
 function addToStreak() {
   const count = getStreakToday() + 1;
   store.set('streak', { date: todayKey(), count });

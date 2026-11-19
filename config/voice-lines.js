@@ -47,7 +47,7 @@ const VOICE_LINES = {
 // How the voices sound. pitch: 0 (low) to 2 (high). rate: speed, 1 = normal.
 const VOICE_STYLES = {
   gadget: { pitch: 1.4, rate: 1.05 }, // the friendly gadget characters
-  villain: { pitch: 0.6, rate: 0.9 }, // Overclock, the Friday villain (Stage 6)
+  villain: { pitch: 0.6, rate: 0.9 }, // Overclock, the Friday villain
 };
 
 // Voices we'd love to use, best first. The first one found on the computer

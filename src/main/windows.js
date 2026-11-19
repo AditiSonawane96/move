@@ -1,7 +1,7 @@
 // src/main/windows.js
 // ---------------------------------------------------------------------------
 // Opens the small, normal windows: the welcome screen and settings.
-// (The big see-through nudge window comes in Stage 2, in its own file.)
+// (The big see-through nudge window is in nudge-window.js.)
 //
 // If a window is already open, we just bring it to the front instead of
 // opening a second copy.
