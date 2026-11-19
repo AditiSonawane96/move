@@ -1,7 +1,7 @@
 {
   "name": "movenudge",
-  "productName": "MoveNudge",
-  "version": "1.0.0",
+  "productName": "Move",
+  "version": "1.1.0",
   "description": "A cute desktop buddy that walks onto your screen and gets you to stand up and move.",
   "main": "main.js",
   "license": "MIT",
@@ -23,7 +23,7 @@
   "author": "Aditi Sonawane",
   "build": {
     "appId": "com.movenudge.app",
-    "productName": "MoveNudge",
+    "productName": "Move",
     "directories": {
       "output": "dist",
       "buildResources": "build"
@@ -54,8 +54,8 @@
       }
     },
     "dmg": {
-      "title": "MoveNudge ${version}",
-      "artifactName": "MoveNudge-${version}-mac.dmg"
+      "title": "Move ${version}",
+      "artifactName": "Move-${version}-mac.dmg"
     },
     "win": {
       "target": [
@@ -72,7 +72,7 @@
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": false,
-      "artifactName": "MoveNudge-${version}-windows-setup.exe"
+      "artifactName": "Move-${version}-windows-setup.exe"
     }
   }
 }

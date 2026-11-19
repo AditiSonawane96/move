@@ -1,6 +1,6 @@
 // main.js
 // ---------------------------------------------------------------------------
-// The starting point of MoveNudge: the "brain" that runs in the background.
+// The starting point of Move: the "brain" that runs in the background.
 //
 // It doesn't do much work itself. It wires the other parts together:
 //   store.js    remembers your settings
@@ -11,6 +11,14 @@
 // ---------------------------------------------------------------------------
 
 const { app, ipcMain, BrowserWindow } = require('electron');
+const path = require('path');
+
+// The app used to be called "MoveNudge", and its settings (your name,
+// streak...) are saved in a folder with that name. Keep using that folder,
+// so nobody loses their settings after the rename to "Move".
+// (This must happen BEFORE store.js is loaded on the next line.)
+app.setPath('userData', path.join(app.getPath('appData'), 'MoveNudge'));
+
 const store = require('./src/main/store');
 const timer = require('./src/main/timer');
 const tray = require('./src/main/tray');
@@ -42,7 +50,7 @@ function currentHoliday() {
 const isDev = process.argv.includes('--dev');
 const isMac = process.platform === 'darwin';
 
-// Only allow one copy of MoveNudge to run at a time. If you open it again,
+// Only allow one copy of Move to run at a time. If you open it again,
 // the second copy quits and the first one shows its settings instead.
 if (!app.requestSingleInstanceLock()) {
   app.quit();
@@ -78,7 +86,7 @@ function startApp() {
     openSettings: () => windows.openSettings(),
     simulateAwayAndBack: () => timer.simulateAwayAndBack(),
     // For the tray title: who's on duty right now.
-    characterOnDutyName: () => characterOnDuty({ holiday: currentHoliday() }).name,
+    characterOnDutyName: () => characterOnDuty({ turn: store.getCharacterTurn(), holiday: currentHoliday() }).name,
     // Developer: pretend it's Friday or a holiday; faster ignore reactions.
     pretendOptions: [{ id: 'none', name: 'A normal day' }, { id: 'friday', name: 'Friday (villain)' }, ...HOLIDAYS],
     getPretend: () => dev.pretend,
@@ -125,10 +133,11 @@ function startApp() {
 // do its thing. The countdown waits until the nudge is finished.
 // ---------------------------------------------------------------------------
 // "characterId" is optional: without it, chooseCharacter() decides
-// (the hourly character, a holiday character, or the Friday villain).
+// (the next character in turn, a holiday character, or the Friday villain).
 function startNudge(characterId) {
   const holiday = currentHoliday();
-  const chosen = characterId || chooseCharacter({ holiday, forceVillain: dev.pretend === 'friday' }).id;
+  const chosen =
+    characterId || chooseCharacter({ turn: store.getCharacterTurn(), holiday, forceVillain: dev.pretend === 'friday' }).id;
   const opened = nudgeWindow.show(
     {
       name: store.getName(),
@@ -143,7 +152,10 @@ function startNudge(characterId) {
     },
     onNudgeFinished
   );
-  if (opened) timer.markNudging(); // (if a nudge was already showing, do nothing)
+  if (!opened) return; // a nudge was already showing: do nothing
+  timer.markNudging();
+  // A normal nudge used up this character's turn: next time, the next one comes.
+  if (!characterId) store.nextCharacterTurn();
 }
 
 // Called after the character has walked off screen.
@@ -158,7 +170,7 @@ function onNudgeFinished(result) {
 
 // Start automatically when you log in to your computer.
 // We only do this in the installed app: while developing with "npm start",
-// it would register the bare Electron program instead of MoveNudge.
+// it would register the bare Electron program instead of Move.
 function applyStartAtLogin() {
   if (!app.isPackaged) return;
   app.setLoginItemSettings({ openAtLogin: store.get('startAtLogin') });
@@ -192,6 +204,6 @@ function registerWindowMessages() {
   });
 }
 
-// Normally an app quits when its last window closes. MoveNudge lives in the
-// tray, so we keep running. (Use "Quit MoveNudge" in the menu to exit.)
+// Normally an app quits when its last window closes. Move lives in the
+// tray, so we keep running. (Use "Quit Move" in the menu to exit.)
 app.on('window-all-closed', () => {});

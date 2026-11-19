@@ -75,7 +75,7 @@ async function buildGallery() {
   // Load the characters one at a time (each file sets window.MoveNudgeCharacter).
   const characters = [];
   for (const id of characterIds) characters.push(await loadCharacter(id));
-  document.querySelector('h1').textContent = `MoveNudge gallery: ${characters.map((c) => c.name).join(', ')}`;
+  document.querySelector('h1').textContent = `Move gallery: ${characters.map((c) => c.name).join(', ')}`;
 
   for (const tileInfo of TILES) {
     if (only && !tileInfo[0].toLowerCase().includes(only)) continue;

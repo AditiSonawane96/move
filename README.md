@@ -1,4 +1,4 @@
-# MoveNudge 🏃‍♀️💻
+# Move 🏃‍♀️💻
 
 **A cute desktop buddy that gets you off your chair.**
 
@@ -27,7 +27,7 @@ stays on your computer.
 - 🏋️ **8 exercises done together**, with a tip, a rep count and a progress bar:
   squats, calf raises, arm circles, back arch, side stretch, jumping jacks,
   push-ups and mountain climbers.
-- 🤖 **6 gadget friends** take turns every hour: Chip the CPU, Clicky the mouse,
+- 🤖 **6 gadget friends** take turns, a different one every break: Chip the CPU, Clicky the mouse,
   Volt the battery, Mona the monitor, Keys the keyboard and Bass the headphones.
 - 😤 **Ignore it at your own risk**: foot tapping, yawning, then it sits on your
   mouse pointer.
@@ -48,17 +48,17 @@ and download the file for your computer:
 
 | Your computer | Download |
 |---|---|
-| Mac (Intel or Apple Silicon) | `MoveNudge-x.x.x-mac.dmg` |
-| Windows | `MoveNudge-x.x.x-windows-setup.exe` |
+| Mac (Intel or Apple Silicon) | `Move-x.x.x-mac.dmg` |
+| Windows | `Move-x.x.x-windows-setup.exe` |
 
 ### Mac
 
-1. Open the `.dmg` file and drag **MoveNudge** into the **Applications** folder.
-2. Open MoveNudge from Applications. You'll probably see a warning, see
+1. Open the `.dmg` file and drag **Move** into the **Applications** folder.
+2. Open Move from Applications. You'll probably see a warning, see
    [below](#the-unverified-app-warning).
 3. Type your name in the welcome window. Done!
 4. Look for the little chip icon and the countdown (like `Chip · 29:59`)
-   **in the menu bar at the top of your screen**. MoveNudge has no Dock icon.
+   **in the menu bar at the top of your screen**. Move has no Dock icon.
 
 ### Windows
 
@@ -71,27 +71,27 @@ and download the file for your computer:
 
 ### The "unverified app" warning
 
-MoveNudge is a free hobby project, so it isn't signed with a paid Apple or
+Move is a free hobby project, so it isn't signed with a paid Apple or
 Microsoft developer certificate. Your computer will warn you the first time.
 That's expected. Here's how to open it anyway:
 
 **Mac (macOS 15 Sequoia and newer)**
 
-1. Open MoveNudge. When you see *"MoveNudge" Not Opened* (or *Apple could not
+1. Open Move. When you see *"Move" Not Opened* (or *Apple could not
    verify…*), click **Done**.
 2. Open **System Settings → Privacy & Security**.
-3. Scroll down to the message about MoveNudge and click **Open Anyway**.
+3. Scroll down to the message about Move and click **Open Anyway**.
 4. Enter your password, then click **Open Anyway** once more.
 
 You only need to do this once.
 
-*Older Macs (macOS 14 and earlier):* right-click (or Control-click) MoveNudge
+*Older Macs (macOS 14 and earlier):* right-click (or Control-click) Move
 in Applications, choose **Open**, then click **Open** again.
 
 *Still blocked?* Open the **Terminal** app and run this, then try again:
 
 ```bash
-xattr -dr com.apple.quarantine /Applications/MoveNudge.app
+xattr -dr com.apple.quarantine /Applications/Move.app
 ```
 
 **Windows**
@@ -110,7 +110,7 @@ Click the tray / menu bar icon to:
 - open **Settings…** (character size, voice, "ask how I'm feeling", start at login)
 - **Quit**
 
-MoveNudge starts by itself when you log in, and pauses while your computer is
+Move starts by itself when you log in, and pauses while your computer is
 locked, asleep, or you've been away for 5+ minutes.
 
 ---

@@ -1,6 +1,6 @@
 # .github/workflows/release.yml
 # -----------------------------------------------------------------------------
-# Builds MoveNudge for Mac and Windows and attaches the installers to a
+# Builds Move for Mac and Windows and attaches the installers to a
 # GitHub Release, every time you push a version tag like v1.0.0.
 #
 # How to make a release (from the movenudge folder):

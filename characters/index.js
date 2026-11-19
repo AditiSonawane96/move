@@ -20,14 +20,15 @@ const ROSTER = [
   { id: 'bass', name: 'Bass' }, // the headphones
 ];
 
-// Characters take turns by the hour: every new hour, the next buddy in the
-// list takes over (midnight Chip, 1am Clicky, 2am Volt... 6am Chip again).
+// Characters take turns: every nudge, the next buddy in the list comes
+// (Chip, then Clicky, then Volt... then Chip again). "turn" is a counter
+// that main.js saves and adds 1 to after each nudge.
 // (The % sign means "remainder after dividing", so it loops back to Chip.)
-function characterForHour(hour = new Date().getHours()) {
-  return ROSTER[hour % ROSTER.length];
+function characterForTurn(turn = 0) {
+  return ROSTER[turn % ROSTER.length];
 }
 
-// Special characters that are NOT in the hourly rotation.
+// Special characters that are NOT in the normal rotation.
 const VILLAIN = { id: 'overclock', name: 'Overclock' }; // Friday villain
 const SPECIALS = [VILLAIN, { id: 'pumpkin', name: 'Pumpkin' }]; // pumpkin = Halloween
 
@@ -35,23 +36,24 @@ const SPECIALS = [VILLAIN, { id: 'pumpkin', name: 'Pumpkin' }]; // pumpkin = Hal
 const VILLAIN_CHANCE = 1 / 3;
 
 // Who comes for the next nudge?
+//   turn          whose turn it is (see characterForTurn)
 //   holiday       today's holiday from config/holidays.js (or null)
 //   forceVillain  true to always get the villain (developer testing)
-function chooseCharacter({ date = new Date(), holiday = null, forceVillain = false } = {}) {
+function chooseCharacter({ turn = 0, date = new Date(), holiday = null, forceVillain = false } = {}) {
   const isFriday = date.getDay() === 5; // Sunday = 0, Monday = 1 ... Friday = 5
   if (forceVillain || (isFriday && Math.random() < VILLAIN_CHANCE)) return VILLAIN;
   if (holiday && holiday.character) {
     return SPECIALS.find((c) => c.id === holiday.character) || { id: holiday.character, name: holiday.name };
   }
-  return characterForHour(date.getHours());
+  return characterForTurn(turn);
 }
 
-// Who the tray shows as "on duty" (the villain is a surprise, so not him).
-function characterOnDuty({ date = new Date(), holiday = null } = {}) {
+// Who the tray shows as coming next (the villain is a surprise, so not him).
+function characterOnDuty({ turn = 0, holiday = null } = {}) {
   if (holiday && holiday.character) {
     return SPECIALS.find((c) => c.id === holiday.character) || { id: holiday.character, name: holiday.name };
   }
-  return characterForHour(date.getHours());
+  return characterForTurn(turn);
 }
 
-module.exports = { ROSTER, SPECIALS, VILLAIN, characterForHour, chooseCharacter, characterOnDuty };
+module.exports = { ROSTER, SPECIALS, VILLAIN, characterForTurn, chooseCharacter, characterOnDuty };

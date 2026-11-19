@@ -44,7 +44,7 @@ function openWindow(key, htmlFile, { width, height, title }) {
   win.loadFile(path.join(__dirname, '..', 'renderer', htmlFile));
   win.once('ready-to-show', () => {
     win.show();
-    // MoveNudge has no Dock icon on Mac, so we ask to come to the front.
+    // Move has no Dock icon on Mac, so we ask to come to the front.
     app.focus({ steal: true });
   });
   win.on('closed', () => delete openWindows[key]);
@@ -54,11 +54,11 @@ function openWindow(key, htmlFile, { width, height, title }) {
 }
 
 function openWelcome() {
-  return openWindow('welcome', 'welcome/welcome.html', { width: 440, height: 560, title: 'Welcome to MoveNudge' });
+  return openWindow('welcome', 'welcome/welcome.html', { width: 440, height: 560, title: 'Welcome to Move' });
 }
 
 function openSettings() {
-  return openWindow('settings', 'settings/settings.html', { width: 460, height: 780, title: 'MoveNudge Settings' });
+  return openWindow('settings', 'settings/settings.html', { width: 460, height: 780, title: 'Move Settings' });
 }
 
 function closeAll() {

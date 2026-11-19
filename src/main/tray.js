@@ -62,7 +62,7 @@ function update(status) {
     // doesn't jiggle every second.
     tray.setTitle(` ${text}`, { fontType: 'monospacedDigit' });
   }
-  tray.setToolTip(`MoveNudge · ${text}`);
+  tray.setToolTip(`Move · ${text}`);
 }
 
 // Builds and shows the menu. "event.altKey" is true if you hold the
@@ -119,7 +119,7 @@ function buildMenu(showDevOptions) {
             click: () => actions.setInterval(store.TEST_INTERVAL),
           },
           {
-            // Try any character right now, without waiting for its hour.
+            // Try any character right now, without waiting for its turn.
             label: 'Preview character',
             submenu: [...ROSTER, ...SPECIALS].map((character) => ({
               label: character.name,
@@ -150,7 +150,7 @@ function buildMenu(showDevOptions) {
     );
   }
 
-  template.push({ type: 'separator' }, { label: 'Quit MoveNudge', click: actions.quit });
+  template.push({ type: 'separator' }, { label: 'Quit Move', click: actions.quit });
   return Menu.buildFromTemplate(template);
 }
 

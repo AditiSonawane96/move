@@ -1,12 +1,13 @@
 // src/main/store.js
 // ---------------------------------------------------------------------------
-// Everything MoveNudge remembers lives here: your name, your interval, voice
+// Everything Move remembers lives here: your name, your interval, voice
 // settings and today's streak.
 //
 // We use the "electron-store" package, which saves a small JSON file on YOUR
 // computer only. Nothing is ever sent over the internet. You can find the file:
 //   Mac:     ~/Library/Application Support/MoveNudge/config.json
 //   Windows: %APPDATA%\MoveNudge\config.json
+// (The folder keeps the app's old name, MoveNudge. See the top of main.js.)
 // ---------------------------------------------------------------------------
 
 const Store = require('electron-store');
@@ -30,6 +31,7 @@ const store = new Store({
     askFeeling: false, // ask "How are you feeling?" before picking an exercise
     startAtLogin: true,
     streak: { date: '', count: 0 }, // nudges completed today
+    characterTurn: 0, // whose turn it is next (see characters/index.js)
   },
 });
 
@@ -73,6 +75,15 @@ function getSettings() {
   };
 }
 
+// Whose turn it is to visit, and moving on to the next character.
+function getCharacterTurn() {
+  return store.get('characterTurn');
+}
+
+function nextCharacterTurn() {
+  store.set('characterTurn', store.get('characterTurn') + 1);
+}
+
 // Saves changes coming from a window. We double-check every value, because
 // we never want a typo or a bad value to break the saved settings.
 function saveSettings(changes) {
@@ -107,6 +118,8 @@ module.exports = {
   getName,
   getStreakToday,
   addToStreak,
+  getCharacterTurn,
+  nextCharacterTurn,
   getSettings,
   saveSettings,
   resetAll,
