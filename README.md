@@ -10,10 +10,9 @@ then it sits on your mouse pointer until you give in. 😄
 Works on **Mac** and **Windows**. Free, open source, and private: everything
 stays on your computer.
 
-<!-- SCREENSHOTS: replace these with your own images in docs/screenshots/ -->
-| Knock knock! | Exercising together | Victory dance |
+| Hey there! | Let's move! | Bye for now! |
 |---|---|---|
-| ![Chip knocking on the screen](docs/screenshots/knock.png) | ![Volt doing squats next to the exercise card](docs/screenshots/exercise.png) | ![Chip dancing after Done](docs/screenshots/dance.png) |
+| ![Chip waving hello and calling you by name](docs/screenshots/hello.png) | ![Chip doing jumping jacks next to the exercise card](docs/screenshots/exercise.png) | ![Chip dancing after you press Done](docs/screenshots/bye.png) |
 
 ---
 
